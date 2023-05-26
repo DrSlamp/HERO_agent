@@ -22,8 +22,7 @@ from gym_environments.envs.puzzles.v0.blocks.blocks import (
 from gym_environments.envs.atari.v0.pacman.pacman import (
     PacmanEnv as PacmanEnvV0
 )
-
-from gym_environments.envs.HERO.V0.hero.hero import (
+from gym_environments.envs.puzzles.v0.hero.hero import (
     HeroEnv as HeroEnvV0,
 )
 
