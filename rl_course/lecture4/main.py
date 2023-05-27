@@ -19,18 +19,16 @@ def run(env, agent, selection, episodes):
     for episode in range(episodes):
         steps = 0
         acc_reward = 0
-        # if ((episode+1)%100 == 0 and selection == "epsilon-greedy"): 
-        #     print (f"Completed episodes: {episode+1}")
         obs, _ = env.reset()
         if selection == "greedy":
             env.render()
-            time.sleep(1)
+            time.sleep(0.5)
         terminated, truncated = False, False
         while not (terminated or truncated):
             action = agent.get_action(obs, selection)
             new_obs, rwd, terminated, truncated, _ = env.step(action)
             steps += 1
-            acc_reward +=  rwd
+            acc_reward += rwd
             agent.update(obs, action, new_obs, rwd, terminated)
             obs = new_obs
             if steps == 400:
@@ -48,8 +46,8 @@ if __name__ == "__main__":
     agent = QLearning(
         env.observation_space.n, env.action_space.n, alpha=0.1, gamma=0.9, epsilon=0.1
     )
-    episodes = 900
-    tests = 100
+    episodes = 1000
+    tests = 5
 
     avg_spe = np.zeros(episodes)
     avg_rpe = np.zeros(episodes)
@@ -71,8 +69,8 @@ if __name__ == "__main__":
     avg_spe /= tests
     avg_rpe /= tests
 
-    for test in range(tests):
-        run(env, agent, "epsilon-greedy", episodes)
+    for test in range(1):
+        run(env, agent, "epsilon-greedy", 5*episodes)
 
     env = gym.make(ENVIRONMENT, render_mode="human")
     run(env, agent, "greedy", 1)
