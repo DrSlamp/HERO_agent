@@ -64,7 +64,7 @@ if __name__ == "__main__":
             avg_spe[i] += steps_per_episode[i]
             avg_rpe[i] += reward_per_episode[i]
         agent.reset()
-        env.close()
+        # env.close()
     
     avg_spe /= tests
     avg_rpe /= tests

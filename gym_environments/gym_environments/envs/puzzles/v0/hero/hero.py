@@ -13,6 +13,7 @@ import gym
 from gym import spaces
 
 from .game.Game import Game
+from .game import settings
 
 
 class HeroEnv(gym.Env):
@@ -70,6 +71,9 @@ class HeroEnv(gym.Env):
         #     self.current_reward = -10000
         #     terminated = True
         if self.game.world.pickups == 6:
+            if self.render_mode == "human":
+                settings.SOUNDS['pickup'].play()
+
             self.current_reward = 1000
             terminated = True
 

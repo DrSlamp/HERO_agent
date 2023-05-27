@@ -7,16 +7,17 @@ import pygame
 
 from .src.World import World
 
-
 class Game:
     def __init__(self, title, render_mode):
         self.render_mode = render_mode
 
         self.world = World()
+        pygame.mixer.init()
 
-        if self.render_mode is not None:
+        if self.render_mode == "human":
             pygame.init()
             pygame.display.init()
+            pygame.mixer.music.play(loops=-1)
 
             w, h = self.world.tile_map.width, self.world.tile_map.height
 
@@ -49,5 +50,7 @@ class Game:
         pygame.display.update()
 
     def close(self):
+        pygame.mixer.music.stop()
+        pygame.mixer.quit()
         pygame.display.quit()
         pygame.quit()

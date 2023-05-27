@@ -30,6 +30,17 @@ GAME_TEXTURES = {
     "item": pygame.image.load(BASE_DIR / "graphics" / "item.png"),
 }
 
+# Initializing the mixer
+pygame.mixer.init()
+
+# Loading music
+pygame.mixer.music.load(BASE_DIR / "sounds" / "medieval_fantasy.opus")
+
+# Sound effects
+SOUNDS = {
+    'pickup': pygame.mixer.Sound(BASE_DIR / "sounds" / "power_up.ogg")
+}
+
 # Frames
 GAME_FRAMES = {
     "tiles": generate_frames(GAME_TEXTURES["tiles"], TILE_SIZE, TILE_SIZE),
