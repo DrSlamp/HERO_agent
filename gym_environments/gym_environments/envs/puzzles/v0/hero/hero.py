@@ -32,7 +32,8 @@ class HeroEnv(gym.Env):
         self.delay = 0.07
 
     def __compute_state_result(self, mc, it):
-        return mc * self.n + it
+        # print(f"new state is MC:{mc}, it:{it}, state:{it * self.n + mc}")
+        return it * self.n + mc
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -55,28 +56,29 @@ class HeroEnv(gym.Env):
         self.current_action = action
         
         terminated = False
-        self.current_reward = -2.0
+        self.current_reward = -15 + self.game.world.pickups*2
 
-        if self.game.world.check_collision():
-            self.pickups += 1
-            print (f"{self.pickups} ", end='')
-            self.current_reward = self.pickups * 1000.0
-            if self.pickups == 3:
-                print("")
-                terminated = True
-        
         old_state = self.current_state
         self.current_state = self.game.update(self.current_action)
 
         if old_state == self.current_state:
-            self.current_reward = -20.0
+            self.current_reward = -30.0
+        elif self.game.world.check_win():
+            pass
+            # self.pickups += 1
+        # elif self.game.world.hero.energy == 0:
+        #     self.current_reward = -10000
+        #     terminated = True
+        if self.game.world.pickups == 6:
+            self.current_reward = 1000
+            terminated = True
 
-        if self.render_mode is "training":
+        # if self.render_mode == "training":
+        #     self.render()
+        #     time.sleep(0.0005)
+        elif self.render_mode == "human":
             self.render()
-            time.sleep(0.5)
-        elif self.render_mode is "human":
-            self.render()
-            time.sleep(0.5)
+            time.sleep(0.03)
 
         return (
             self.__compute_state_result(*self.current_state),

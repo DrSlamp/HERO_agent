@@ -23,6 +23,7 @@ class Entity(DrawableMixin):
         self.off_set_j = 0
         self.movement = movement
         self.busy_mark = busy_mark
+        self.colliding = False
         self.taken = False
 
     def move(self):

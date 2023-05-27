@@ -23,7 +23,11 @@ class QLearning:
         self.q_table = np.zeros((self.states_n, self.actions_n))
 
     def update(self, current_state, action, next_state, reward, terminated):
-        self._update(current_state, action, next_state, reward, terminated)
+        self.state = current_state
+        self.action = action
+        self.next_state = next_state
+        self.reward = reward
+        # self._update(current_state, action, next_state, reward, terminated)
         self.q_table[current_state, action] = self.q_table[
             current_state, action
         ] + self.alpha * (
@@ -33,14 +37,14 @@ class QLearning:
         )
 
     def _update(self, current_state, action, next_state, reward, terminated):
-        self.iteration += 1
+        # self.iteration += 1
         self.state = current_state
         self.action = action
         self.next_state = next_state
         self.reward = reward
-        if terminated:
-            self.episode += 1
-            self.iteration = 0
+        # if terminated:
+        #     self.episode += 1
+        #     self.iteration = 0
 
     def get_action(self, state, mode):
         if mode == "random":

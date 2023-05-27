@@ -11,6 +11,6 @@ class DrawableMixin:
         image.fill((0, 0, 0, 0))
         image.blit(texture, (0, 0), frame)
         if self.texture_name != "floor":
-            surface.blit(image, (self.x, self.y - 4))   
+            surface.blit(image, (self.x, self.y - 2))   
         else:
             surface.blit(image, (self.x, self.y))

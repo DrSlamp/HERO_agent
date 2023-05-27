@@ -22,10 +22,10 @@ class World:
         self.item_1 = None
         self.item_2 = None
         self.item_3 = None
-        # self.statue_1 = None
-        # self.statue_2 = None
-        # self.target_1 = None
-        # self.target_2 = None
+        self.item_4 = None
+        self.item_5 = None
+        self.item_6 = None
+        self.pickups = 0
         self.__load_environment()
 
     def __load_environment(self) -> None:
@@ -75,11 +75,23 @@ class World:
             self.item_3 = Item(x, y, self, "forward")
             self.tile_map.tiles[row][col].busy_by = "IT"
 
-            # row, col = f.readline().split(" ")
-            # self.target_1 = int(row), int(col)
+            row, col = f.readline().split(" ")
+            row, col = int(row), int(col)
+            x, y = TileMap.to_screen(row, col)
+            self.item_4 = Item(x, y, self, "forward")
+            self.tile_map.tiles[row][col].busy_by = "IT"
 
-            # row, col = f.readline().split(" ")
-            # self.target_2 = int(row), int(col)
+            row, col = f.readline().split(" ")
+            row, col = int(row), int(col)
+            x, y = TileMap.to_screen(row, col)
+            self.item_5 = Item(x, y, self, "forward")
+            self.tile_map.tiles[row][col].busy_by = "IT"
+
+            row, col = f.readline().split(" ")
+            row, col = int(row), int(col)
+            x, y = TileMap.to_screen(row, col)
+            self.item_6 = Item(x, y, self, "forward")
+            self.tile_map.tiles[row][col].busy_by = "IT"
 
     def reset(self):
         self.tile_map = None
@@ -87,6 +99,10 @@ class World:
         self.item_1 = None
         self.item_2 = None
         self.item_3 = None
+        self.item_4 = None
+        self.item_5 = None
+        self.item_6 = None
+        self.pickups = 0
         self.__load_environment()
         return self.get_state()
 
@@ -100,47 +116,42 @@ class World:
         #     and self.hero.y == self.statue_2.y
         # )
 
-    def check_win(self, pickups):
-        return pickups == 3
-
-    def check_collision(self):
-        mc = self.hero.x, self.hero.y
-        ans = False
-        if self.item_1.taken is not None:
-            i1 = self.item_1.x, self.item_1.y
-            # if (mc == i1):
-            #     print(f"collided with i1")
-            ans = (mc == i1)
-        if self.item_2.taken is not None:
-            i2 = self.item_2.x, self.item_2.y
-            # if (mc == i2):
-            #     print(f"collided with i2")
-            ans = (mc == i2)
-        if self.item_3.taken is not None:
-            i3 = self.item_3.x, self.item_3.y
-            # if (mc == i3):
-            #     print(f"collided with i3")
-            ans = (mc == i3)
-
-        return ans
+    def check_win(self):
+        return self.pickups == 6
 
     def check_pickup(self):
         mc = self.hero.x, self.hero.y
-        if not self.item_1.taken:
-            i1 = self.item_1.x, self.item_1.y
-            if mc == i1:
-                self.item_1.taken = True
-                return True
-        if not self.item_2.taken:
-            i2 = self.item_2.x, self.item_2.y
-            if mc == i2:
-                self.item_2.taken = True
-                return True
-        if not self.item_3.taken:
-            i3 = self.item_3.x, self.item_3.y
-            if mc == i3:
-                self.item_3.taken = True
-                return True
+        i1 = self.item_1.x, self.item_1.y
+        i2 = self.item_2.x, self.item_2.y
+        i3 = self.item_3.x, self.item_3.y
+        i4 = self.item_4.x, self.item_4.y
+        i5 = self.item_5.x, self.item_5.y
+        i6 = self.item_6.x, self.item_6.y
+
+        if not self.item_1.taken and mc == i1:
+            self.item_1.taken = True
+            self.pickups += 1
+            return True
+        if not self.item_2.taken and mc == i2:
+            self.item_2.taken = True
+            self.pickups += 1
+            return True
+        if not self.item_3.taken and mc == i3:
+            self.item_3.taken = True
+            self.pickups += 1
+            return True
+        if not self.item_4.taken and mc == i4:
+            self.item_4.taken = True
+            self.pickups += 1
+            return True
+        if not self.item_5.taken and mc == i5:
+            self.item_5.taken = True
+            self.pickups += 1
+            return True
+        if not self.item_6.taken and mc == i6:
+            self.item_6.taken = True
+            self.pickups += 1
+            return True
 
         return False
 
@@ -148,10 +159,12 @@ class World:
         mc_i, mc_j = TileMap.to_map(self.hero.x, self.hero.y)
         mc_p = mc_i * self.tile_map.cols + mc_j
 
-        it_p = ((self.item_1 is not None) +
-                (self.item_2 is not None) << 1 +
-                (self.item_3 is not None) << 2)
-
+        it_p = ((not self.item_1.taken) |
+                (not self.item_2.taken) << 1 |
+                (not self.item_3.taken) << 2 |
+                (not self.item_1.taken) << 3 |
+                (not self.item_2.taken) << 4 |
+                (not self.item_3.taken) << 5)
         return [mc_p, it_p]
 
     def apply_action(self, action):
@@ -171,4 +184,10 @@ class World:
             self.item_2.render(surface)
         if not self.item_3.taken:
             self.item_3.render(surface)
+        if not self.item_4.taken:
+            self.item_4.render(surface)
+        if not self.item_5.taken:
+            self.item_5.render(surface)
+        if not self.item_6.taken:
+            self.item_6.render(surface)
         self.hero.render(surface)

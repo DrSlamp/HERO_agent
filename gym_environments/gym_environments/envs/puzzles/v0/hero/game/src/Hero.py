@@ -24,9 +24,10 @@ class Hero(Entity):
             "HR",
         )
         # Frames by action
-        # self.frames = [10, 7, 4, 1]
         self.frames = [4, 0, 12, 8]
+        self.energy = 400
 
     def act(self, action):
+        self.energy = max (0, self.energy - 1)
         self.movement[action]()
         self.frame_index = self.frames[action]
