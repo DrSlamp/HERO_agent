@@ -82,7 +82,7 @@ class HeroEnv(gym.Env):
         #     time.sleep(0.0005)
         elif self.render_mode == "human":
             self.render()
-            time.sleep(0.03)
+            time.sleep(0.4)
 
         return (
             self.__compute_state_result(*self.current_state),

@@ -34,7 +34,7 @@ GAME_TEXTURES = {
 pygame.mixer.init()
 
 # Loading music
-pygame.mixer.music.load(BASE_DIR / "sounds" / "medieval_fantasy.opus")
+pygame.mixer.music.load(BASE_DIR / "sounds" / "medieval_fantasy.ogg")
 
 # Sound effects
 SOUNDS = {
