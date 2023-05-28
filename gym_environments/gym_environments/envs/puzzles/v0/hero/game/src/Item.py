@@ -1,8 +1,7 @@
 # Authors:
-# Barreto Luis
+# Barreto Paul
 # Lezama Luis
 # Ramírez Coalbert
-
 from .. import settings
 
 from .Entity import Entity

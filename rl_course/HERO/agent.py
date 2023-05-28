@@ -1,5 +1,5 @@
 # Authors:
-# Barreto Luis
+# Barreto Paul
 # Lezama Luis
 # Ramírez Coalbert
 import numpy as np
