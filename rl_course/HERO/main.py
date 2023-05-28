@@ -46,8 +46,8 @@ if __name__ == "__main__":
     agent = QLearning(
         env.observation_space.n, env.action_space.n, alpha=0.1, gamma=0.9, epsilon=0.1
     )
-    episodes = 1000
-    tests = 5
+    episodes = 800
+    tests = 100
 
     avg_spe = np.zeros(episodes)
     avg_rpe = np.zeros(episodes)
