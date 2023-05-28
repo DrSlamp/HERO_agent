@@ -9,3 +9,8 @@ register(
     id="Hero-v0",
     entry_point="gym_environments.envs:HeroEnvV0",
 )
+
+register(
+    id="Hero-v1",
+    entry_point="gym_environments.envs:HeroEnvV1",
+)

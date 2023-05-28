@@ -14,7 +14,6 @@ import random
 
 TILES = {"0": {"frame": 4}, "1": {"frame": 0}, "2": {"frame": 3}}
 
-
 class World:
     def __init__(self):
         self.tile_map = None
